@@ -21,6 +21,47 @@ class ClasseRepository extends ServiceEntityRepository
         parent::__construct($registry, Classe::class);
     }
 
+    public function findPaginate($page,$limit) {
+        return $this->createQueryBuilder('c')
+            ->where('c.isActive = true')
+            ->setFirstResult(($page-1)*$limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+     }
+
+     public function findPaginateByFiltre($page,$limit,array $filtres) {
+
+          $query=$this->createQueryBuilder('c')
+                      ->where('c.isActive = true');
+          if(!empty($filtres['filiere'])){
+            $query= $query
+                ->leftJoin('c.filiere','f')
+                ->andWhere('f.id = :idFiliere')
+                ->setParameter('idFiliere',$filtres['filiere']);
+             }
+            if(!empty($filtres['niveau'])){
+                $query= $query
+                ->leftJoin('c.niveau','n')
+                ->andWhere('n.id = :idNiveau')
+                ->setParameter('idNiveau',$filtres['niveau']);
+         }
+         return $query
+               ->setFirstResult($page)
+              ->setMaxResults($limit)
+              ->getQuery()
+              ->getResult();
+     }
+
+     public function countClasse() {
+          return $this->createQueryBuilder('c')
+                ->select('count(c.id) as count')
+                ->where('c.isActive = true')
+                ->getQuery()
+                ->getSingleScalarResult();
+      }
+
 //    /**
 //     * @return Classe[] Returns an array of Classe objects
 //     */
