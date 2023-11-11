@@ -21,20 +21,22 @@ class ProfesseurRepository extends ServiceEntityRepository
         parent::__construct($registry, Professeur::class);
     }
 
-//    /**
-//     * @return Professeur[] Returns an array of Professeur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Professeur[] Returns an array of Professeur objects
+    */
+   public function findDistinctGrade(): array
+   {  
+           $entityManager = $this->getEntityManager();
+           $query = $entityManager->createQuery(
+            'SELECT p.grade
+               FROM App\Entity\Professeur p
+              ORDER BY p.grade ASC'
+             );
+
+        // returns an array of Product objects
+       // dd( array_map(fn($value):string => $value['grade'] ,$query->getResult()))  ;
+           return $query->getResult();
+   }
 
 //    public function findOneBySomeField($value): ?Professeur
 //    {

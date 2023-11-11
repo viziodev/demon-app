@@ -16,13 +16,7 @@
                 <script src="{{asset('js/chart-js-config.js')}}"></script>
                {% endblock %}
 
-        {% block javascripts %}
-               <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-                <script src="{{ asset('js/easion.js')}}"></script>
-        {% endblock %}
+       
     </head>
     <body>
         {% block body %}
@@ -99,9 +93,14 @@
                     <input type="text" class="searchbox-input" placeholder="type to search">
                 </form>
                 <div class="tools">
-                    <a href="https://github.com/subet/easion" target="_blank" class="tools-item">
-                        <i class="fab fa-github"></i>
-                    </a>
+                  <select class="form-control  ml-3" name="" id="select-annee" style="width:150px">
+                        {% for annee in app.session.get('annees') %}
+                                <option
+                                   {% if(annee.isActive==true) %}selected{% endif %} 
+                                  data-path="{{ path('annee_scolaire_change',{id:annee.id})}}"
+                                  value="{{annee.id}}">{{annee.libelle}}</option>
+                        {% endfor %}
+                            </select>
                     <a href="#!" class="tools-item">
                         <i class="fas fa-bell"></i>
                         <i class="tools-item-count">4</i>
@@ -127,7 +126,37 @@
                 </div>
             </main>
         </div>
+
     </div>
+        {% endblock %}
+
+         {% block javascripts %}
+               <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+                    <script src="{{ asset('js/easion.js')}}"></script>
+
+                       <script > 
+                         
+                         const select =document.querySelector('#select-annee');
+                          select.addEventListener("change",function(event){ 
+                             const option=event.target.options[select.selectedIndex]; 
+                             const path=option.getAttribute('data-path')
+                           fetch(path,{
+                                method: 'GET',
+                                headers: {
+                                'Content-Type': 'application/json'
+                              }
+                            }).then(response => response.json()) 
+                             .then(url => {
+                                  alert(url)
+                                 window.location.href=url; 
+                                    
+                              })
+                              .catch(err => console.log(err))
+                             })
+                       </script>
         {% endblock %}
     </body>
 </html>

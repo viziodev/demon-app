@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block title %}Inscription {% endblock %}
+{% block card_title %} Liste des Inscrits{% endblock %}
+ {% block stylesheets %}
+ {{ parent() }}
+ <style style="text/css">
+     span.invalid-feedback{ 
+        width: 400px;
+      margin-left: 170px;
+      margin-top: 10px; 
+      }
+</style>
+{% endblock %}
+
+{% block content %}
+   <div class="container-fluid">
+   <a name="" id="" class="btn btn-info btn-sm float-right" href="{{path('app_inscription_save')}}" role="button"> <i class="fa fa-plus" aria-hidden="true"></i> Nouveau</a><br>
+              {# Recherche #}
+         <div class="container">
+           <form method="post" action="{{path('inscription_show')}}">
+              <div class="form-inline">
+                <label for=""  class="mx-4 my-2">Classe</label>
+                  <select class="form-control w-25 my-2" name="classe" id="">
+                      <option value="">Classe</option>
+                      {% for classe in classes %}
+                           <option
+value="{{classe.id}}">{{classe.libelle}}</option>
+                      {% endfor %}
+                  </select>
+                    <label for="" class="mx-4 my-2">Date</label>
+                       <input type="date"
+                         class="form-control mx-4 w-25 my-2" name="date" id=""
+aria-describedby="helpId" placeholder="">
+                   <button type="submit" name="btn_annee_filtre" class="btn
+btn-primary btn-sm mx-4"><i class="fa fa-search" aria-hidden="true"></i>
+Rechecher</button>
+              </div>
+           </form>
+       </div>
+
+       <table class="table table-bordered  w-100 mt-3">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th class="">Matricule</th>
+                                <th class="w-">Nom & Prenom</th>
+                                <th class="">Classe</th>
+                                <th class="">Annee</th>
+                                <th class="">Actions</th>
+                            </tr>
+                            </thead>
+
+           <tbody>
+                            {% for inscrit in inscrits %}
+                                <tr>
+                                    <td >{{inscrit.etudiant.matricule}}</td>
+                                    <td>{{inscrit.etudiant.nomComplet}}</td>
+                                    <td>{{inscrit.classe.libelle}}</td>
+                                    <td>{{inscrit.anneeScolaire.libelle}}</td>
+                                    <td>
+                                     <a name="" id="" class="btn btn-info btn-sm"
+                                     href="#" role="button"><i class="fa fa-edit    "></i>  Absences</a>
+                                     <a name="" id="" class="btn btn-warning
+                                    btn-sm" href="#" role="button"><i class="fa fa-trash" aria-hidden="true"></i>Annuler</a></td> 
+                                    </tr>
+{% endfor %}
+        </tbody>
+</table>
+        </div>
+{% endblock %}

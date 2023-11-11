@@ -21,7 +21,7 @@ class Inscription
 
     
 
-    #[ORM\ManyToOne(inversedBy: 'inscriptions')]
+    #[ORM\ManyToOne(inversedBy: 'inscriptions',cascade:["persist"])]
     private ?Etudiant $etudiant = null;
 
     #[ORM\ManyToOne(inversedBy: 'inscriptions')]

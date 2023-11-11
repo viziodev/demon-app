@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}form{% endblock %}
+
+   {% block content %}
+
+
+ {% for message in  app.flashes('message')  %}
+          {{message}}  
+ {% endfor %}
+
+ <div class="col-lg-12">
+     <div class="card mb-2" >
+     <div class="card-header d-flex">
+           <div class="easion-card-icon ">
+               <i class="fas fa-table"></i>
+          </div>
+           <div class="easion-card-title ">Enregistrement d'un Professeur</div>
+            </div>
+       <div class="card-body">
+  
+             {{ form_start(form) }}
+             <div class="form-group row">
+                     {{ form_row(form.etudiant) }}
+                      {{ form_row(form.classe) }}
+                     {{ form_end(form) }}
+            
+    </div>
+    </div>
+</div>
+{% endblock %}

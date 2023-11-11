@@ -19,7 +19,7 @@ class AnneeScolaire
     private ?string $libelle = null;
 
     #[ORM\Column]
-    private ?bool $isActive = false;
+    private ?bool $isActive;
 
     #[ORM\OneToMany(mappedBy: 'anneeScolaire', targetEntity: Inscription::class)]
     private Collection $inscriptions;

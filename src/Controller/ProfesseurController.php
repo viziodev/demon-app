@@ -12,9 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfesseurController extends AbstractController
 {
+  private UserPasswordHasherInterface $encoder;
+    public function  __construct(UserPasswordHasherInterface $encoder){
+        $this->encoder=$encoder;
+  }
     private const LIMIT=2;
     #[Route('/professeur', name: 'app_professeur',methods:["GET"])]
     public function index(Request $request,ProfesseurRepository $professeurRepository,ModuleRepository $moduleRepository,PaginatorInterface $paginator): Response
@@ -36,8 +41,10 @@ class ProfesseurController extends AbstractController
     {
       if($id==null){
         $data = new Professeur();
+        $data->setRoles(["ROLE_PROFESSEUR"]);
       }else{
         $data=$professeurRepository->find($id);
+        $data->setPassword("");
       }
       
         //Creation du Formulaire
@@ -45,6 +52,8 @@ class ProfesseurController extends AbstractController
         //Clique du Button Submit
           $form->handleRequest($request);
            if ($form->isSubmitted() && $form->isValid()) {
+            $encoded = $this->encoder->hashPassword($data,$data->getPassword());
+                            $data->setPassword($encoded);
               $manager->persist($data);
               $manager->flush();
               $this->addFlash("message","Professeur cree");
