@@ -24,10 +24,12 @@
            <form method="post" action="{{path('inscription_show')}}">
               <div class="form-inline">
                 <label for=""  class="mx-4 my-2">Classe</label>
-                  <select class="form-control w-25 my-2" name="classe" id="">
+                  <select class="form-control w-25 my-2" name="classe" id="select-inscription-classe">
                       <option value="">Classe</option>
                       {% for classe in classes %}
                            <option
+                            {% if classeSelected is not  empty  and classeSelected.id == classe.id %}selected{% endif %}
+                           data-path="{{ path('iscription_filtre_classe',{id:classe.id})}}"
 value="{{classe.id}}">{{classe.libelle}}</option>
                       {% endfor %}
                   </select>
@@ -71,3 +73,27 @@ Rechecher</button>
 </table>
         </div>
 {% endblock %}
+
+{% block javascripts %}
+              {{parent()}}
+          
+                       <script > 
+                         const selectClasse =document.querySelector('#select-inscription-classe');
+                          selectClasse.addEventListener("change",function(event){ 
+                             const option=event.target.options[selectClasse.selectedIndex]; 
+                             const path=option.getAttribute('data-path')
+                            
+                            fetch(path,{
+                                 method: 'GET',
+                                 headers: {
+                                 'Content-Type': 'application/json'
+                              }
+                             }).then(response => response.json()) 
+                              .then(url => {    
+                                 window.location.href=url; 
+                                    
+                               })
+                               .catch(err => console.log(err))
+                              })
+                       </script>
+        {% endblock %}

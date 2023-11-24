@@ -62,21 +62,23 @@
                     <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
                         <i class="fas fa-file"></i> Layouts </a>
                     <div class="dash-nav-dropdown-menu">
-                        <a href="blank.html" class="dash-nav-dropdown-item">Blank</a>
+                        <a href="#" class="dash-nav-dropdown-item">Blank</a>
                         <a href="content.html" class="dash-nav-dropdown-item">Content</a>
                         <a href="login.html" class="dash-nav-dropdown-item">Log in</a>
                         <a href="signup.html" class="dash-nav-dropdown-item">Sign up</a>
                     </div>
                 </div>
-                <div class="dash-nav-dropdown">
-                    <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-                        <i class="fas fa-info"></i> About </a>
-                    <div class="dash-nav-dropdown-menu">
-                        <a href="https://github.com/subet/easion" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
-                        <a href="https://usebootstrap.com/theme/easion" target="_blank" class="dash-nav-dropdown-item">UseBootstrap</a>
-                        <a href="https://mudimedia.com" target="_blank" class="dash-nav-dropdown-item">Mudimedia Software</a>
+                {% if is_granted("ROLE_RP") %}
+                    <div class="dash-nav-dropdown">
+                        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+                            <i class="fas fa-info"></i> About </a>
+                        <div class="dash-nav-dropdown-menu">
+                            <a href="https://github.com/subet/easion" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
+                            <a href="https://usebootstrap.com/theme/easion" target="_blank" class="dash-nav-dropdown-item">UseBootstrap</a>
+                            <a href="https://mudimedia.com" target="_blank" class="dash-nav-dropdown-item">Mudimedia Software</a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </nav>
         </div>
         <div class="dash-app">
@@ -149,8 +151,7 @@
                                 'Content-Type': 'application/json'
                               }
                             }).then(response => response.json()) 
-                             .then(url => {
-                                  alert(url)
+                             .then(url => {    
                                  window.location.href=url; 
                                     
                               })

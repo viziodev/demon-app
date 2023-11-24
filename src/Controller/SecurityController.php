@@ -20,7 +20,12 @@ class SecurityController extends AbstractController
              $session->set('anneeEncours',$repo->findOneBy([
                 'isActive'=>1
               ]));
-             return $this->redirectToRoute('app_classe');
+              if(in_array("ROLE_RP",$this->getUser()->getRoles())){
+                 return $this->redirectToRoute('app_classe');
+              }else{
+                return $this->redirectToRoute('inscription_show');
+              }
+               
          }
 
         // get the login error if there is one

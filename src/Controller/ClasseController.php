@@ -20,7 +20,7 @@ use function PHPUnit\Framework\isNull;
 
 class ClasseController extends AbstractController{
     private const LIMIT=3;
-    #[Route('/classe', name: 'app_classe',methods:["GET"])]
+    #[Route('/RP/classe', name: 'app_classe',methods:["GET"])]
     public function index(Request $request,NiveauRepository $niveauRepository,FiliereRepository $filiereRepository,ClasseRepository $classeRepository): Response
     {
         //Recuperation du Parametre Get et Initiamisation à 1
@@ -38,7 +38,7 @@ class ClasseController extends AbstractController{
          ]);
     }
 
-    #[Route('/classe/filtre', name: 'app_classe_filtre',methods:["POST","GET"])]
+    #[Route('/RP/classe/filtre', name: 'app_classe_filtre',methods:["POST","GET"])]
     public function filtre(Request $request,NiveauRepository $niveauRepository,FiliereRepository $filiereRepository,ClasseRepository $classeRepository): Response
     {
         //Recuperation du Parametre Get et Initiamisation à 1
@@ -76,7 +76,7 @@ class ClasseController extends AbstractController{
     }
 
 
-    #[Route('/classe/save/{id?}', name: 'app_classe_save',methods:["GET","POST"])]
+    #[Route('/RP/classe/save/{id?}', name: 'app_classe_save',methods:["GET","POST"])]
     public function store($id,Request $request,EntityManagerInterface $manager,ClasseRepository $classeRepository): Response
     {
       if($id==null){
@@ -100,7 +100,7 @@ class ClasseController extends AbstractController{
     }
    
 
-    #[Route('/classe/remove/{id}', name: 'app_classe_remove',methods:["POST"])]
+    #[Route('/RP/classe/remove/{id}', name: 'app_classe_remove',methods:["POST"])]
     public function remove(): Response
     {
         return $this->render('classe/index.html.twig', [

@@ -1,0 +1,4 @@
+inscription :
+  email   :
+     blank :  The Field is required
+     unique : This email must be unique

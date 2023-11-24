@@ -35,9 +35,8 @@ class AnneeScolaireController extends AbstractController
         }else{
             $anneesInSession[$key]->setIsActive(false);
        } 
-       return $anneesInSession;
- 
     }
+    return $anneesInSession;
 }
         
     

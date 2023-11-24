@@ -1,0 +1,4 @@
+inscription :
+  email   :
+     blank :  Ce champ est obligatoire
+     unique : L’email doit etre unique

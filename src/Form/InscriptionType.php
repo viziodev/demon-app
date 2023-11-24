@@ -17,6 +17,7 @@ class InscriptionType extends AbstractType
             ->add('classe')
             ->add('etudiant',EtudiantType::class,[
                 'label'=>false, 
+                "required"=>false,
                 "label_attr" => [
                     "class" => "d-none"
                 ], 
